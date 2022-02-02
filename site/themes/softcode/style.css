@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Code+Latin:wght@600&family=Source+Code+Pro&display=swap');
+
+@keyframes fade {
+    from {
+        top: -20px;
+        left: -5px;
+        opacity: 0;
+        height: 0px;
+    }
+    to {
+        top:0px;
+        left:0px;
+        opacity: 1;
+        height: 20px;
+    }
+}
+
+@keyframes slight-pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.9;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes glowy {
+    0% {
+        color: #222;
+    }
+    25% {
+        color: #72cb4f;
+    }
+    50% {
+        color: #666;
+    }
+    75% {
+        color: #e2542e;
+    }
+    100% {
+        color: #222;
+    }
+}
+
+p {
+    color: #13a1f7;
+    opacity: 1;
+    position: relative;
+    font-family: 'M PLUS Code Latin', sans-serif;
+    animation: slight-pulse 19s;
+    animation-iteration-count: infinite;
+}
+
+p.new {
+    animation: fade 1s;
+}
+
+p.err {
+    color: #e2542e;
+}
+
+p.suc {
+    color: #72cb4f;
+}
+
+body {
+    color: #888;
+}
+
+.username {
+    text-decoration: underline;
+    color: #66ccb0;
+}
+
+h1,h2 {
+    animation: slight-pulse 19s;
+    animation-iteration-count: infinite;
+}
+
+h3 {
+    color: #000;
+    animation: glowy 10s;
+    animation-iteration-count: infinite;
+    font-family: 'M PLUS Code Latin', sans-serif;
+}

@@ -1,0 +1,27 @@
+.chat-window {
+    overflow-y: hidden;
+    overflow-x: hidden;
+    overflow-wrap: break-word;
+}
+
+.alerbox-window {
+    overflow-y: hidden;
+    overflow-x: hidden;
+    overflow-wrap: break-word;
+}
+
+body {
+    overflow-y: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.emote {
+    width: 20px;
+    height: 20px;
+}
+
+.hide-overflow {
+    overflow-y: hidden;
+    max-height: 90vh;
+}
+

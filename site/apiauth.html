@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Authentication</title>
+    <link href="/global.css" rel="stylesheet">
+</head>
+
+<body>
+    <a href="/">Back</a><br>
+    <a
+        href="https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=$CLIENT_ID$&redirect_uri=http://localhost:3000/apiauth&scope=user:read:follows channel:read:subscriptions channel:read:redemptions bits:read">
+        Login to Twitch
+    </a><br>
+    <a href="/savedauth">
+        Recover last login
+    </a>
+</body>
+
+<script>
+    const hash = location.hash;
+
+    if (hash != "") {
+        document.body.innerHTML = "Redirecting...";
+
+        const rgx_token = /(?<=access_token=)(.{30})/g;
+
+        tkn = hash.match(rgx_token)[0];
+        location.href = location.href.replace(/apiauth\.html.*/, `apiauth?token=${tkn}`);
+    }
+</script>
+
+</html>
