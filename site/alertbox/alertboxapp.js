@@ -8,6 +8,10 @@ var onDisconnect = function () {
     alertbox.innerHTML = `<i>Disconnected. Reconnecting in 5s</i><br>` + alertbox.innerHTML;
 };
 
+var onFollow = function (e) {
+    alertbox.innerHTML = `A new follower: ${e.user.displayName}`;
+};
+
 window.onload = main;
 
 function main() {
@@ -26,7 +30,10 @@ function main() {
         data = event.data.substr(3);
         obj = JSON.parse(data);
         console.log(`Data received from server: ${obj}`);
-        onMessage(obj);
+        type = String(obj.type);
+        methodName = "on" + type.toUpperCase()[0] + type.toLowerCase().substr(1);
+
+        window[methodName](obj);
     };
 
     _socket.onclose = function (event) {

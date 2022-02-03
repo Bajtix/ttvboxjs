@@ -6,7 +6,7 @@
     "@twurple/eventsub-ngrok": "^5.0.17",
     "express": "^4.17.2"
   },
-  "name": "localtwitch",
+  "name": "twitchboxjs",
   "version": "1.0.0",
   "description": "node.js twitch chat & alertbox",
   "main": "main.js",

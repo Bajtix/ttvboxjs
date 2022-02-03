@@ -3,6 +3,19 @@ exports.clean = function (a) {
     return r;
 }
 
+
+exports.emotify = function (msg) {
+    msgtxt = "";
+    msg.parseEmotes().forEach(element => {
+        if (element.text != undefined)
+            msgtxt += element.text;
+        if (element.id != undefined)
+            msgtxt += "{" + element.id + "@" + element.name + "}";
+    });
+
+    return msgtxt
+}
+
 class Logger {
     constructor(name) {
         this.name = name;

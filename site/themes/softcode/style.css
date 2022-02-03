@@ -2,16 +2,16 @@
 
 @keyframes fade {
     from {
-        top: -20px;
-        left: -5px;
+        top: -40px;
+        left: 0px;
         opacity: 0;
-        height: 0px;
+        max-height: 0px;
     }
     to {
         top:0px;
         left:0px;
         opacity: 1;
-        height: 20px;
+        max-height: 4rem;
     }
 }
 
@@ -72,8 +72,10 @@ p {
     opacity: 1;
     position: relative;
     font-family: 'M PLUS Code Latin', sans-serif;
+    max-height: fit-content;
     animation: slight-pulse 19s;
-    animation-iteration-count: infinite;
+    animation-iteration-count: infinite; 
+
 }
 
 p.new {

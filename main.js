@@ -4,7 +4,7 @@ const url = require('url');
 const twitch = require('./twitchapi.js');
 const comms = require('./communication.js');
 const butil = require('./butil.js');
-const { ChildProcess, exec } = require('child_process');
+const tests = require('./tests.js');
 
 const app = express();
 const port = 3000;
@@ -20,7 +20,8 @@ function siteError(msg) {
     return fs.readFileSync('./site/err.html', 'utf8').replace("$MESSAGE$", msg);
 }
 
-
+//#region legacy
+/* LEGACY CODE
 app.get('/apiauth', (req, res) => {
     urlquery = url.parse(req.url, true).query;
     if (urlquery == null || urlquery.token == null) {
@@ -61,8 +62,8 @@ app.get('/auth', (req, res) => {
     pg = pg.replace("$CLIENT_ID$", myClientId);
 
     res.send(pg);
-});
-
+});*/
+//#endregion
 
 app.get('/chat', (req, res) => {
     // if (req.url.indexOf('chat/') == undefined) {
@@ -116,6 +117,26 @@ app.get('/alertbox/', (req, res) => {
 
 });
 
+app.get('/test/', (req, res) => {
+    urlquery = req.query;
+    if (urlquery == null || urlquery.type == null) type = "CONNECT";
+    else type = urlquery.type;
+
+    switch (type) {
+        case 'CHAT':
+            tests.sendTestChat();
+            break;
+        case 'CONNECT':
+            tests.sendTestConnect();
+            break;
+        case 'FOLLOW':
+            tests.sendTestFollow();
+            break;
+    }
+
+    res.redirect("/testtoolbox.html");
+});
+
 app.use(express.static("site"));
 
 
@@ -135,29 +156,34 @@ function commsStart() {
 
 function addListenersToEvents() {
     twitch.chatMessage = msg => {
-        msgtxt = "";
-        msg.parseEmotes().forEach(element => {
-            if (element.text != undefined)
-                msgtxt += element.text;
-            if (element.id != undefined)
-                msgtxt += "{" + element.id + "@" + element.name + "}";
-        });
-        obj = {
+        messageText = butil.emotify(msg);
+        data = {
             user: {
                 userName: msg.userInfo.userName,
                 displayName: msg.userInfo.displayName,
                 isMod: msg.userInfo.isMod,
                 isSub: msg.userInfo.isSubscriber,
                 isFounder: msg.userInfo.isFounder,
-                isBroadcaster: msg.userInfo.isBroadcaster
+                isBroadcaster: msg.userInfo.isBroadcaster,
+                color: msg.userInfo.color
             },
             message: butil.clean(msgtxt),
         };
-
-        m = JSON.stringify(obj);
-        comms.send("[c]" + m);
+        comms.send("[c]" + JSON.stringify(data));
     };
+
+    twitch.onFollow = follow => {
+        data = {
+            type: "FOLLOW",
+            user: {
+                userName: follow.userName,
+                displayName: follow.displayName,
+            }
+        }
+        comms.send("[a]" + JSON.stringify(data));
+    }
 }
+
 
 function twitchApiStart() {
     commsStart();

@@ -93,7 +93,7 @@ async function initializeChat() {
     await chatClient.connect();
 
     await chatClient.onMessage(async (channel, user, message, msg) => {
-        exports.chatMessage(msg)
+        exports.chatMessage(msg);
     });
     chatlogger.log("REGISTER MESSAGE EVENT")
 
