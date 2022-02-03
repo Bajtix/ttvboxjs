@@ -5,12 +5,39 @@ body {
 
 h3 {
     margin-top: -20px;
+    
 }
 
-.chatwindow {
+.chat-window {
     width: 100%;
     height: 100%;
     overflow-y: hidden;
     overflow-x: hidden;
     overflow-wrap: break-word;
+}
+
+.alertbox-window {
+    width: 100%;
+    height: 100vh;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    overflow-wrap: break-word;
+    text-align: center;
+}
+
+#alertboxbox {
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: hidden;
+}
+
+.notification {
+    display: block;
+    text-align: center;
+}
+
+.notification h3 {
+    margin-bottom: -20px;
 }

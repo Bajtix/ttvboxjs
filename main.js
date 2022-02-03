@@ -177,7 +177,7 @@ function addListenersToEvents() {
             type: "FOLLOW",
             user: {
                 userName: follow.userName,
-                displayName: follow.displayName,
+                displayName: follow.userDisplayName,
             }
         }
         comms.send("[a]" + JSON.stringify(data));

@@ -1,5 +1,8 @@
-onConnect = function () {
+init = function () {
     chat = document.getElementById("chatbox");
+}
+
+onConnect = function () {
     chat.innerHTML = "<i>Connected</i>";
 }
 
@@ -10,6 +13,5 @@ onMessage = function (message) {
 }
 
 onDisconnect = function () {
-    chat = document.getElementById("chatbox");
     chat.innerHTML = "<i>Disconnected. Trying again in 5s</i><br>" + chat.innerHTML;
 }

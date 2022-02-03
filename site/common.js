@@ -37,4 +37,12 @@ class common {
 
         return result;
     }
+
+    /*
+        Plays audio... duh
+    */
+    static playAudio(url) {
+        var audio = new Audio(url);
+        audio.play();
+    }
 }

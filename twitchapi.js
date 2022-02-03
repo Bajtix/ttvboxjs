@@ -78,6 +78,7 @@ async function initializeEventSub() {
 
     await listener.subscribeToChannelFollowEvents(userId, e => {
         exports.onFollow(e);
+        esublogger.log("FOLLOW EVENT: " + e.userName);
     });
     esublogger.log("REGISTER FOLLOW EVENT")
 

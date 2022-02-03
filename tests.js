@@ -20,7 +20,7 @@ const users = [
     new usr("KarolWojtyła", "Jan Paweł II", true, false, false, "yellow"),
     new usr("约翰塞纳", "John Xina 约翰塞纳", false, false, false, undefined),
     new usr("disstream", "Norbert 'Dis' Gierczak", false, false, false, undefined),
-    new usr("dragster", "League of Legends Player 12", true, false, false, "blue"),
+    new usr("fat_chad", "League of Legends Player 12", true, false, false, "blue"),
     new usr("bombel", "Bom Bel", true, true, true, undefined),
     new usr("aaaaaaaaaaaaaAAAAAAAAAAaaaaa", "Pain", false, true, false, "red"),
     new usr("simpqueen", "Pokimane", true, false, true, "pink"),
@@ -47,11 +47,12 @@ exports.sendTestConnect = function () {
 }
 
 exports.sendTestFollow = function () {
+    var usr = getRandomUser();
     data = {
         type: "FOLLOW",
         user: {
-            userName: "Test Username",
-            displayName: "Test Displayname",
+            userName: usr.userName,
+            displayName: usr.displayName
         }
     }
     comms.send("[a]" + JSON.stringify(data));

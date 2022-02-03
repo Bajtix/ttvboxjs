@@ -1,22 +1,33 @@
 var alertbox;
 
+
+
+var init = function (e) {
+
+};
+
 var onConnect = function () {
-    alertbox.innerHTML = `<i>Connected</i><br>`;
+
 };
 
 var onDisconnect = function () {
-    alertbox.innerHTML = `<i>Disconnected. Reconnecting in 5s</i><br>` + alertbox.innerHTML;
+
 };
 
 var onFollow = function (e) {
-    alertbox.innerHTML = `A new follower: ${e.user.displayName}`;
+    alertbox.innerHTML = `<h1>New follower: ${e.user.displayName}</h1>`;
+    setTimeout(() => alertbox.innerHTML = ``, 3000);
 };
+
+
 
 window.onload = main;
 
 function main() {
     var _socket;
     alertbox = document.getElementById("alertbox");
+
+    init();
 
     _socket = new WebSocket("ws://localhost:3001");
 
@@ -49,6 +60,8 @@ function main() {
     _socket.onerror = function (error) {
         console.log(`[error] ${error.message}`);
     };
+
+
 }
 
 

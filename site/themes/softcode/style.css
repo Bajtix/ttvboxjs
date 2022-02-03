@@ -11,7 +11,7 @@
         top:0px;
         left:0px;
         opacity: 1;
-        max-height: 4rem;
+        max-height: calc(10rem);
     }
 }
 
