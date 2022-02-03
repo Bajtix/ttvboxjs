@@ -52,6 +52,8 @@ body.homesite {
     background-color: #161221;
     display: inline-block;
     padding: 20px;
+    min-height: calc(100vh - 40px);
+    height: max-content;
 }
 
 .homesite .titlebar {
@@ -98,4 +100,15 @@ body.homesite {
 
 .homesite table#themes * {
     width: 25%;
+}
+
+
+.homesite #previews iframe {
+    width: 50%;
+    height: 45vh;
+    display: block;
+    float: left;
+    margin: 0px;
+    padding: 0px;
+    border: none;
 }

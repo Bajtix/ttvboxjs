@@ -20,43 +20,61 @@
                 </a>
             </div>
             <h2>Test Toolbox</h2>
+            <hr align="left">
             <p>
                 You can use the Test Toolbox to test different aspects of your theme, your OBS config or the
                 entirety
                 of the ttvbox.js app
             </p>
 
-            <h3 class="header">General</h3>
-            <a href="/test?type=CONNECT">Connect</a><br>
-
             <h3 class="header">Chat</h3>
-            <a href="/test?type=MESSAGE">Connect</a>
+            <a href="#" onclick="chat()">Message</a>
 
             <h3 class="header">Alertbox</h3>
-            <a href="/test?type=FOLLOW">Follow</a><br>
-            <a href="/test?type=BITCHEER">Bit Cheer</a>
+            <a href="#" onclick="connect()">Connect</a><br>
+            <a href="#" onclick="follow()">Follow</a><br>
+            <a href="#" onclick="bitcheer()">Bit Cheer</a>
 
             <h3 class="header">StreamSim</h3>
             <a href="#" id="ssimbtn">Enable</a>
 
+            <h3 class="header">Previews</h3>
+            <div id="previews">
+                <iframe width="40%" height="20%" src="/chat">
+
+                </iframe>
+                <iframe width="40%" height="20%" src="/alertbox">
+
+                </iframe>
+            </div>
+
 
         </div>
+
     </div>
     <script>
         var enabled = false;
 
+        function connect() {
+            fetch("/test?type=CONNECT");
+        }
+
         function chat() {
-            if (!enabled) return;
-
             fetch("/test?type=CHAT");
-
+            if (!enabled) return;
             setTimeout(() => chat(), Math.random() * 2000);
         }
 
         function follow() {
-            if (!enabled) return;
             fetch("/test?type=FOLLOW");
+            if (!enabled) return;
             setTimeout(() => follow(), Math.random() * 30000);
+        }
+
+        function bitcheer() {
+            fetch("/test?type=BITCHEER");
+            if (!enabled) return;
+            setTimeout(() => bitcheer(), Math.random() * 50000);
         }
 
         function startsim() {

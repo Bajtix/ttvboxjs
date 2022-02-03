@@ -245,7 +245,8 @@ function loadTokenAndSettings() {
         myClientId = tknp.clientId;
         myClientPass = tknp.clientSecret;
     } else {
-        console.log("token.json is missing");
+        console.error("error: token.json is missing. Please create a Twitch app (https://dev.twitch.tv/console) and pass the token data in a token.json file");
+        process.exit();
     }
 
     if (fs.existsSync("./settings.json")) {
