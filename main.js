@@ -11,10 +11,11 @@ const port = 3000;
 
 const httplogger = new butil.Logger("EXPRESS");
 
-const myClientId = "";
-const myClientPass = "";
-const userId = 0;
+//settings and token
+var myClientId = "";
+var myClientPass = "";
 
+var userId = 0;
 var defaultTheme = "default";
 
 
@@ -147,6 +148,7 @@ app.get('/themeset', (req, res) => {
     } else {
         data = siteError(`Theme ${themeurl} doesn't exist`);
     }
+    saveSettings();
     res.send(data);
 });
 
@@ -165,6 +167,37 @@ app.get('/themels', (req, res) => {
     });
     res.type('application/json');
     res.send(JSON.stringify(tresponse));
+});
+
+app.get('/userls', (req, res) => {
+    var tresponse = {
+        id: userId,
+        name: twitch.username
+    };
+
+    res.type('application/json');
+    res.send(JSON.stringify(tresponse));
+});
+
+app.get('/userset', (req, res) => {
+    urlquery = url.parse(req.url, true).query;
+    if (urlquery == null || urlquery.name == null) {
+        res.send(siteError("Incorrect user name"));
+    }
+    else
+        uname = urlquery.name;
+
+    twitch.findUserByName(uname).then(w => {
+        twitch.stop();
+        userId = w.id;
+        saveSettings();
+
+        res.send(siteError(`Found ID ${w.id}.`));
+        twitch.login(myClientId, myClientPass, userId);
+    }, w => {
+        res.send(siteError(`Could not find user. ${w}`));
+    });
+
 });
 
 app.use(express.static("site"));
@@ -205,19 +238,48 @@ function addListenersToEvents() {
     }
 }
 
-function twitchApiStop() {
-    twitch.stop();
-    console.log("STOP API SERVICE");
+function loadTokenAndSettings() {
+    if (fs.existsSync("./token.json")) {
+        tkn = fs.readFileSync("./token.json");
+        tknp = JSON.parse(tkn);
+        myClientId = tknp.clientId;
+        myClientPass = tknp.clientSecret;
+    } else {
+        console.log("token.json is missing");
+    }
+
+    if (fs.existsSync("./settings.json")) {
+        tkn = fs.readFileSync("./settings.json");
+        tknp = JSON.parse(tkn);
+        userId = tknp.user;
+        defaultTheme = tknp.theme;
+    }
 }
 
+function saveSettings() {
+    tknp = {
+        user: userId,
+        theme: defaultTheme
+    };
+
+    tkn = JSON.stringify(tknp);
+
+    fs.writeFileSync("./settings.json", tkn);
+}
+
+loadTokenAndSettings();
+
+
 process.on("SIGINT", () => {
-    twitchApiStop();
+    twitch.stop();
+    console.log("STOP API SERVICE");
     process.exit();
 });
 
 app.listen(port, () => {
     httplogger.log(`STARTING HTTP SERVICE @${port}`);
 });
+
 comms.start(port + 1);
 
 twitch.login(myClientId, myClientPass, userId);

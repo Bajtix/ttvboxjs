@@ -25,7 +25,7 @@ exports.onStreamStarted = function (e) { };
 exports.onRaid = function (e) { };
 exports.onRaided = function (e) { };
 exports.onStreamFinished = function (e) { };
-exports.username = "UNDEFINED | NOT LOADED";
+exports.username = "UNDEFINED";
 
 
 exports.login = function (_clientId, _clientSecret, _userId) {
@@ -37,8 +37,18 @@ exports.login = function (_clientId, _clientSecret, _userId) {
     apiClient = new ApiClient({ authProvider });
     apiClient.eventSub.deleteAllSubscriptions();
     generallogger.log(`SYNC STUFF DONE`)
+
+    exports.findUserByName = function (name) {
+        return apiClient.users.getUserByName(name);
+    }
+
+    if (userId == 0) {
+        generallogger.log("THE USERID IS 0, USER NOT SET. EVENTS ARE IGNORED");
+        return;
+    }
     initializeChat();
     initializeEventSub();
+    generallogger.log("INIT DONE");
 }
 
 async function initializeEventSub() {
@@ -82,11 +92,6 @@ async function initializeEventSub() {
         esublogger.log("FOLLOW EVENT: " + e.userName);
     });
     esublogger.log("REGISTER FOLLOW EVENT")
-
-
-
-
-
 }
 
 async function initializeChat() {
@@ -99,10 +104,11 @@ async function initializeChat() {
         exports.chatMessage(msg);
     });
     chatlogger.log("REGISTER MESSAGE EVENT")
-
 }
 
 exports.stop = function () {
+    generallogger.log("STOPPING TWITCH SERVICE")
     apiClient.eventSub.deleteAllSubscriptions();
-    listener.unlisten();
+    if (listener != null)
+        listener.unlisten();
 }

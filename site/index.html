@@ -22,6 +22,20 @@
             here
         </p>
 
+        <h3 class="homesite-header">User</h3>
+        <a id="userid" href="#" onclick="changeusername()">UNDEFINED</a>
+
+        <script>
+            function changeusername() {
+                unm = prompt("Type in your username (NOT DISPLAYNAME)");
+                window.location.href = "/userset?name=" + unm;
+            }
+            fetch("/userls").then(w => w.text().then(e => {
+                name = JSON.parse(e).name;
+                document.getElementById("userid").innerHTML = name + " (change)";
+            }));
+        </script>
+
         <h3 class="homesite-header">Modules</h3>
         <a target="external" href="chat/">Chat</a><br>
         <a target="external" href="alertbox/">Alertbox</a>
