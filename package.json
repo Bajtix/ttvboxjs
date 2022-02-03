@@ -8,7 +8,7 @@
   },
   "name": "localtwitch",
   "version": "1.0.0",
-  "description": "npm twitch chat & alertbox",
+  "description": "node.js twitch chat & alertbox",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

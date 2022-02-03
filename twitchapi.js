@@ -22,6 +22,9 @@ const generallogger = new Logger("TWITCH");
 exports.onChatMessage = function (e) { };
 exports.onFollow = function (e) { };
 exports.onStreamStarted = function (e) { };
+exports.onRaid = function (e) { };
+exports.onRaided = function (e) { };
+exports.onStreamFinished = function (e) { };
 
 
 exports.login = function (_clientId, _clientSecret, _userId) {
@@ -45,15 +48,40 @@ async function initializeEventSub() {
     });
     listener.listen();
 
-    await listener.subscribeToChannelFollowEvents(userId, e => {
-        exports.onFollow(e);
-    });
-    esublogger.log("REGISTER FOLLOW EVENT")
 
     await listener.subscribeToStreamOnlineEvents(userId, e => {
         exports.onStreamStarted(e);
     });
     esublogger.log("REGISTER STREAMSTART EVENT")
+
+    await listener.subscribeToStreamOfflineEvents(userId, e => {
+        exports.onStreamFinished(e);
+    });
+    esublogger.log("REGISTER STREAMSTOP EVENT")
+
+    await listener.subscribeToChannelRaidEventsTo(userId, e => {
+        exports.onRaid(e);
+    });
+    esublogger.log("REGISTER RAIDED EVENT")
+
+    await listener.subscribeToChannelRaidEventsFrom(userId, e => {
+        exports.onRaidStart(e);
+    });
+    esublogger.log("REGISTER RAID EVENT")
+
+    await listener.subscribeToChannelCheerEvents(userId, e => {
+        exports.onBitCheer(e);
+    });
+    esublogger.log("REGISTER BITCHEER EVENT")
+
+    await listener.subscribetochannel
+
+    await listener.subscribeToChannelFollowEvents(userId, e => {
+        exports.onFollow(e);
+    });
+    esublogger.log("REGISTER FOLLOW EVENT")
+
+
 
 
 
