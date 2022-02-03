@@ -29,7 +29,7 @@
 
 @keyframes glowy {
     0% {
-        color: #222;
+        color: #333;
     }
     25% {
         color: #72cb4f;
@@ -41,7 +41,29 @@
         color: #e2542e;
     }
     100% {
-        color: #222;
+        color: #333;
+    }
+}
+
+@keyframes emote-glow {
+    0% {
+        color: #13a1f7;
+        /* transform: rotate(0deg); */
+    }
+    25% {
+        color: #72cb4f;
+        /* transform: rotate(4deg); */
+    }
+    50% {
+        color: #66ccb0;
+    }
+    75% {
+        color: #e2542e;
+        /* transform: rotate(-4deg); */
+    }
+    100% {
+        color: #13a1f7;
+        /* transform: rotate(0deg); */
     }
 }
 
@@ -85,4 +107,14 @@ h3 {
     animation: glowy 10s;
     animation-iteration-count: infinite;
     font-family: 'M PLUS Code Latin', sans-serif;
+}
+
+.emote {
+    display: inline-block;
+    /* transform: rotate(45deg); */
+    color: #DDD;
+    animation: emote-glow 3s;
+    animation-iteration-count: infinite;
+    font-weight: bold;
+    width: max-content;
 }

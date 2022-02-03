@@ -117,26 +117,21 @@ app.use(express.static("site"));
 
 
 app.listen(port, () => {
-    console.log(`Server app listening on port ${port}`);
+    console.log(`STARTING HTTP SERVICE @ ${port}`);
 });
 
+process.on("SIGINT", () => {
+    twitchApiStop();
+    process.exit();
+});
 
 
 function commsStart() {
     comms.start(3001);
 }
 
-process.on("SIGINT", () => {
-    twitchApiStop();
-});
-
-
-function twitchApiStart() {
-    tokendata = JSON.parse(fs.readFileSync("./tokendata", 'utf-8'));
-
-    twitch.login(myClientId, myClientPass, tokendata.user, tokendata.token);
-    twitch.chatClient.onMessage(async (channel, user, message, msg) => {
-
+function addListenersToEvents() {
+    twitch.chatMessage = msg => {
         msgtxt = "";
         msg.parseEmotes().forEach(element => {
             if (element.text != undefined)
@@ -157,13 +152,28 @@ function twitchApiStart() {
         };
 
         m = JSON.stringify(obj);
-
-        console.log(m);
         comms.send("[c]" + m);
-    });
+    };
+}
+
+function twitchApiStart() {
+    commsStart();
+    twitch.login(myClientId, myClientPass, userId);
+    addListenersToEvents();
+
+    //legacy code
+    //tokendata = JSON.parse(fs.readFileSync("./tokendata", 'utf-8'));
+
 }
 
 function twitchApiStop() {
     twitch.stop();
     console.log("STOP API SERVICE");
 }
+
+
+
+
+
+twitchApiStart();
+

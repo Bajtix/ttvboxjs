@@ -4,12 +4,7 @@
     "@twurple/chat": "^5.0.17",
     "@twurple/eventsub": "^5.0.17",
     "@twurple/eventsub-ngrok": "^5.0.17",
-    "express": "^4.17.2",
-    "twitch": "^4.6.7",
-    "twitch-auth": "^4.6.7",
-    "twitch-chat-client": "^4.6.7",
-    "twitch-eventsub": "^4.6.7",
-    "twitch-eventsub-ngrok": "^4.6.7"
+    "express": "^4.17.2"
   },
   "name": "localtwitch",
   "version": "1.0.0",

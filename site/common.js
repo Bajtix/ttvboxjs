@@ -13,7 +13,7 @@ class common {
             console.log(`filtering ${element} @ ${index}`);
             let nm = element.match(nmsl);
             console.log("found " + nm);
-            result = result.replace(element, nm);
+            result = result.replace(element, `<span class="emote">${nm}</span>`);
         });
 
         return result;
