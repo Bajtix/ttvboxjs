@@ -15,6 +15,8 @@ const myClientId = "mq7xi6y53ndsk98iwomgjwzcv42hy3";
 const myClientPass = "7gfv2ko10dmmbam4klsq2snwmcj884";
 const userId = 161969141;
 
+var defaultTheme = "default";
+
 
 function siteError(msg) {
     return fs.readFileSync('./site/err.html', 'utf8').replace("$MESSAGE$", msg);
@@ -75,7 +77,7 @@ app.get('/chat', (req, res) => {
     page = fs.readFileSync('./site/chat/index.html', 'utf8');
 
     urlquery = url.parse(req.url, true).query;
-    if (urlquery == null || urlquery.theme == null) themeurl = "default";
+    if (urlquery == null || urlquery.theme == null) themeurl = defaultTheme;
     else themeurl = urlquery.theme;
 
     themeurl = themeurl.replace('<', ' ').replace('>', ' ');
@@ -84,14 +86,14 @@ app.get('/chat', (req, res) => {
         theme = fs.readFileSync(`./site/themes/${themeurl}/chat.html`, 'utf8');
         data = page.replace("$CONTENT$", theme)
     } else {
-        data = siteError(`Theme ${themeurl} doesn't exist`);
+        data = siteError(`The theme ${themeurl} for chat doesn't exist`);
     }
 
     res.send(data);
 
 });
 
-app.get('/alertbox/', (req, res) => {
+app.get('/alertbox', (req, res) => {
     // if (req.url.indexOf('alertbox/') == undefined) {
     //     res.redirect(res.url.replace('/alertbox', '/alertbox/'));
     //     return;
@@ -101,7 +103,7 @@ app.get('/alertbox/', (req, res) => {
     page = fs.readFileSync('./site/alertbox/index.html', 'utf8');
 
     urlquery = url.parse(req.url, true).query;
-    if (urlquery == null || urlquery.theme == null) themeurl = "default";
+    if (urlquery == null || urlquery.theme == null) themeurl = defaultTheme;
     else themeurl = urlquery.theme;
 
     themeurl = themeurl.replace('<', ' ').replace('>', ' ');
@@ -110,14 +112,14 @@ app.get('/alertbox/', (req, res) => {
         theme = fs.readFileSync(`./site/themes/${themeurl}/alertbox.html`, 'utf8');
         data = page.replace("$CONTENT$", theme)
     } else {
-        data = siteError(`Theme ${themeurl} doesn't exist`);
+        data = siteError(`The theme ${themeurl} for alertbox doesn't exist`);
     }
 
     res.send(data);
 
 });
 
-app.get('/test/', (req, res) => {
+app.get('/test', (req, res) => {
     urlquery = req.query;
     if (urlquery == null || urlquery.type == null) type = "CONNECT";
     else type = urlquery.type;
@@ -135,6 +137,35 @@ app.get('/test/', (req, res) => {
     }
 
     res.redirect("/testtoolbox.html");
+});
+
+app.get('/themeset', (req, res) => {
+    urlquery = url.parse(req.url, true).query;
+    if (urlquery == null || urlquery.theme == null) themeurl = defaultTheme;
+    else themeurl = urlquery.theme;
+
+    if (fs.existsSync(`./site/themes/${themeurl}/`)) {
+        defaultTheme = theme;
+    } else {
+        data = siteError(`Theme ${themeurl} doesn't exist`);
+    }
+});
+
+app.get('/themels', (req, res) => {
+    var tresponse = [];
+    fs.readdirSync("./site/themes/", 'utf8', true).forEach(element => {
+        ahtml = fs.existsSync(`./site/themes/${element}/alertbox.html`);
+        chtml = fs.existsSync(`./site/themes/${element}/chat.html`);
+        isdefault = element == defaultTheme;
+        tresponse.push({
+            name: element,
+            alertbox: ahtml,
+            chatbox: chtml,
+            default: isdefault
+        });
+    });
+    res.type('application/json');
+    res.send(JSON.stringify(tresponse));
 });
 
 app.use(express.static("site"));

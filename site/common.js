@@ -40,9 +40,11 @@ class common {
 
     /*
         Plays audio... duh
+        @param url Url of the audio file
     */
-    static playAudio(url) {
+    static playAudio(url, volume = 0.5) {
         var audio = new Audio(url);
+        audio.volume = volume;
         audio.play();
     }
 }

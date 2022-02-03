@@ -8,11 +8,48 @@
     <link href="global.css" rel="stylesheet" />
 </head>
 
+<script>
+    var enabled = false;
+
+    function chat() {
+        if (!enabled) return;
+
+        fetch("/test?type=CHAT");
+
+        setTimeout(() => chat(), Math.random() * 2000);
+    }
+
+    function follow() {
+        if (!enabled) return;
+        fetch("/test?type=FOLLOW");
+        setTimeout(() => follow(), Math.random() * 30000);
+    }
+
+    function startsim() {
+        enabled = true;
+        setTimeout(() => chat(), 100);
+        setTimeout(() => follow(), 1000);
+    }
+
+    function stopsim() {
+        enabled = false;
+    }
+</script>
+
+
 <body>
-    <h1>ttvbox.js</h1>
-    <h3>Send fake events to the COMMS</h3>
+    <a href="/">
+        <h1>ttvbox.js</h1>
+    </a>
+    <h2>Test toolbox</h2>
+    <p>The test toolbox allows you to send fake events, which might come in handy while testing themes or your setup in
+        general</p>
+    <h3>Manual tests</h3>
     <a href="/test?type=CHAT">Send Chat Message</a><br>
     <a href="/test?type=FOLLOW">Send Follow</a>
+    <h3>StreamSim</h3>
+    <a href="#" onclick="startsim()">Start</a><br>
+    <a href="#" onclick="stopsim()">Stop</a>
 
 </body>
 

@@ -11,7 +11,8 @@ var onConnect = function () {
 };
 
 var onDisconnect = function () {
-
+    alertbox.innerHTML = `<h1>Disconnected</h1>`;
+    setTimeout(() => alertbox.innerHTML = ``, 3000);
 };
 
 var onFollow = function (e) {
