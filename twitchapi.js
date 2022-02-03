@@ -12,6 +12,8 @@ var authProvider;
 var apiClient;
 var clientToken;
 
+var eventListener;
+
 
 var userId;
 
@@ -26,30 +28,46 @@ exports.login = function (cid, csc, uid, token) {
     userId = uid;
 
     apiClient.setAccessToken(token);
+    apiClient.getTokenInfo().then(w => w.scopes);
 
     initEventListener();
     initChatClient();
+
+    exports.apiClient = apiClient;
 }
 
-function initEventListener() {
+
+
+exports.stop = function () {
+    try {
+        stopEventListener();
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+
+var onFollow, onSubscribe, onStreamStart;
+
+async function initEventListener() {
     var adapter = new NgrokAdapter();
 
-    eventListener = new EventSubListener(apiClient, adapter, 'bardzopodejrzanyfacetwchodzidoventa');
+    eventListener = new EventSubListener(apiClient, adapter, 'susyamogusy');
 
     console.log(`Events will be handled for ${userId}`);
     eventListener.listen();
 
 
 
-    eventListener.subscribeToStreamOnlineEvents(userId, e => {
+    onStreamStart = await eventListener.subscribeToStreamOnlineEvents(userId, e => {
         console.log(`stream started`);
     });
 
-    eventListener.subscribeToChannelFollowEvents(userId, e => {
+    onFollow = await eventListener.subscribeToChannelFollowEvents(userId, e => {
         console.log(`${e.userName} just followed!`);
     });
 
-    adapter.getHostName().then((e) => console.log("Hosting as https://" + e));
+    console.log("Hosting as https://" + await adapter.getHostName());
 
 
     // eventListener.subscribeToChannelModeratorAddEvents(userId, e => {
@@ -60,6 +78,16 @@ function initEventListener() {
 
     console.log("registered events");
 }
+
+function stopEventListener() {
+    try {
+        eventListener.unlisten();
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+
 
 function initChatClient() {
     exports.chatClient = ChatClient.anonymous({ channels: ['bajtixone'] });

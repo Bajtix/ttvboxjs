@@ -8,8 +8,8 @@ const butil = require('./butil.js');
 const app = express();
 const port = 3000;
 
-const myClientId = "tuaj03rfsn48ktftv6ipc6wx6twrj8";
-const myClientPass = "0gwai61ebrnfh72righgw2c6wdwn36";
+const myClientId = "mq7xi6y53ndsk98iwomgjwzcv42hy3";
+const myClientPass = "7gfv2ko10dmmbam4klsq2snwmcj884";
 const userId = 161969141;
 
 
@@ -21,7 +21,7 @@ function siteError(msg) {
 app.get('/apiauth', (req, res) => {
     urlquery = url.parse(req.url, true).query;
     if (urlquery == null || urlquery.token == null) {
-        res.redirect("/auth.html");
+        res.redirect("/auth");
         return;
     }
     token = {
@@ -121,9 +121,14 @@ app.listen(port, () => {
 });
 
 
+
 function commsStart() {
     comms.start(3001);
 }
+
+process.on("SIGINT", () => {
+    twitchApiStop();
+});
 
 
 function twitchApiStart() {
@@ -156,4 +161,9 @@ function twitchApiStart() {
         console.log(m);
         comms.send("[c]" + m);
     });
+}
+
+function twitchApiStop() {
+    twitch.stop();
+    console.log("STOP API SERVICE");
 }
