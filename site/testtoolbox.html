@@ -55,6 +55,8 @@
     <script>
         var enabled = false;
 
+        var timeouts = []
+
         function connect() {
             fetch("/test?type=CONNECT");
         }
@@ -62,19 +64,19 @@
         function chat() {
             fetch("/test?type=CHAT");
             if (!enabled) return;
-            setTimeout(() => chat(), Math.random() * 2000);
+            timeouts.push(setTimeout(() => chat(), Math.random() * 2000));
         }
 
         function follow() {
             fetch("/test?type=FOLLOW");
             if (!enabled) return;
-            setTimeout(() => follow(), Math.random() * 30000);
+            timeouts.push(setTimeout(() => follow(), Math.random() * 30000));
         }
 
         function bitcheer() {
             fetch("/test?type=BITCHEER");
             if (!enabled) return;
-            setTimeout(() => bitcheer(), Math.random() * 50000);
+            timeouts.push(setTimeout(() => bitcheer(), Math.random() * 50000));
         }
 
         function startsim() {
@@ -88,7 +90,9 @@
         function stopsim() {
             enabled = false;
             document.getElementById("ssimbtn").innerHTML = "Enable";
-
+            timeouts.forEach(element => {
+                clearTimeout(element);
+            })
         }
 
         document.getElementById("ssimbtn").onclick = ((e) => {

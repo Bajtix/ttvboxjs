@@ -95,13 +95,12 @@ body.homesite {
 }
 
 .homesite table#themes tr {
-    background-color: #222;
+    background-color: #110e1a;
 }
 
 .homesite table#themes * {
     width: 25%;
 }
-
 
 .homesite #previews iframe {
     width: 50%;

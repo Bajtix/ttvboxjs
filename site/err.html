@@ -17,23 +17,24 @@
                 </a>
             </div>
             <h2>$MESSAGE$</h2>
-            <p onclick="tp=false">
+            <hr align="left">
+            <p id="redir-cancel" onclick="tp=false">
                 You will automatically get redirected to the correct site in 5s. To cancel, click this text.
             </p>
-            <a href="#" onclick="teleport()">Why wait?</a>
+            <a id="redir-fast" href="#" onclick="teleport()">Why wait?</a>
             <script>
-                var tp = true;
                 var url = "$REDIRECT$";
 
                 function teleport() {
                     window.location.href = url;
                 }
 
-                setTimeout(() => {
-                    if (tp) teleport();
-                }, 5000);
+                setTimeout(() => teleport(), 5000);
 
-                if (url == "#") document.querySelector("p").remove();
+                if (url == "#") {
+                    document.getElementById("redir-cancel").remove();
+                    document.getElementById("redir-fast").remove();
+                }
             </script>
         </div>
     </div>

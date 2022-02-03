@@ -51,7 +51,7 @@
                     <th>Theme Name</th>
                     <th>Alertbox</th>
                     <th>Chat</th>
-                    <th>Selected</th>
+                    <th>Selected Default</th>
                 </tr>
 
                 <script>
@@ -60,10 +60,10 @@
                         themels.forEach(element => {
                             abx = "&#10007; NO";
                             cbx = "&#10007; NO";
-                            sbx = `<a target="external" href="/themeset?theme=${element.name}">&#10007; NO</a>`;
+                            sbx = `<a href="/themeset?theme=${element.name}">&#10007; SELECT</a>`;
                             if (element.alertbox) abx = `<a target="external" href="/alertbox?theme=${element.name}">&#10003; YES</a>`;
                             if (element.chatbox) cbx = `<a target="external" href="/chat?theme=${element.name}">&#10003; YES</a>`;
-                            if (element.default) sbx = `&#10003; YES`;
+                            if (element.default) sbx = `&#10003; SELECTED`;
 
 
                             template = `

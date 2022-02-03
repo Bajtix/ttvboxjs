@@ -9,7 +9,7 @@ init = function () {
 
 onFollow = function (e) {
     notif("New follower", e.user.displayName, "")
-    common.playAudio('/themes/default/notification1.mp3');
+    common.playAudio('/themes/default/notification1.mp3', 0.5, true);
 }
 
 function notif(title, user, message) {
