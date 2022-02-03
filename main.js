@@ -18,8 +18,8 @@ const userId = 161969141;
 var defaultTheme = "default";
 
 
-function siteError(msg) {
-    return fs.readFileSync('./site/err.html', 'utf8').replace("$MESSAGE$", msg);
+function siteError(msg, redirect = "/") {
+    return fs.readFileSync('./site/err.html', 'utf8').replace("$MESSAGE$", msg).replace("$REDIRECT$", redirect);
 }
 
 //#region legacy
@@ -86,7 +86,7 @@ app.get('/chat', (req, res) => {
         theme = fs.readFileSync(`./site/themes/${themeurl}/chat.html`, 'utf8');
         data = page.replace("$CONTENT$", theme)
     } else {
-        data = siteError(`The theme ${themeurl} for chat doesn't exist`);
+        data = siteError(`The theme ${themeurl} for chat doesn't exist`, "#");
     }
 
     res.send(data);
@@ -112,7 +112,7 @@ app.get('/alertbox', (req, res) => {
         theme = fs.readFileSync(`./site/themes/${themeurl}/alertbox.html`, 'utf8');
         data = page.replace("$CONTENT$", theme)
     } else {
-        data = siteError(`The theme ${themeurl} for alertbox doesn't exist`);
+        data = siteError(`The theme ${themeurl} for alertbox doesn't exist`, "#");
     }
 
     res.send(data);
@@ -145,10 +145,12 @@ app.get('/themeset', (req, res) => {
     else themeurl = urlquery.theme;
 
     if (fs.existsSync(`./site/themes/${themeurl}/`)) {
-        defaultTheme = theme;
+        defaultTheme = themeurl;
+        data = siteError("Successfuly changed theme");
     } else {
         data = siteError(`Theme ${themeurl} doesn't exist`);
     }
+    res.send(data);
 });
 
 app.get('/themels', (req, res) => {
@@ -174,6 +176,11 @@ app.use(express.static("site"));
 app.listen(port, () => {
     httplogger.log(`STARTING HTTP SERVICE @${port}`);
 });
+
+app.all('*', (req, res) => {
+    var rurl = butil.clean(req.url);
+    res.send(siteError(`404 The page ${rurl} does not exist`));
+})
 
 process.on("SIGINT", () => {
     twitchApiStop();

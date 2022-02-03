@@ -4,15 +4,37 @@
 <html>
 
 <head>
-    <title>Error</title>
+    <title>Message</title>
     <link href="/global.css" rel="stylesheet" />
 </head>
 
 <body>
-    <a href="/">
-        <h1>ttvbox.js</h1>
-    </a>
-    <b>$MESSAGE$</b>
+    <div class="homesite-content">
+        <div class="homesite-titlebar">
+            <a class="homesite-title" href="/">
+                <h1>ttvbox.js</h1>
+            </a>
+        </div>
+        <h2>$MESSAGE$</h2>
+        <p onclick="tp=false">
+            You will automatically get redirected to the correct site in 5s. To cancel, click this text.
+        </p>
+        <a href="#" onclick="teleport()">Why wait?</a>
+        <script>
+            var tp = true;
+            var url = "$REDIRECT$";
+
+            function teleport() {
+                window.location.href = url;
+            }
+
+            setTimeout(() => {
+                if (tp) teleport();
+            }, 5000);
+
+            if (url == "#") document.querySelector("p").remove();
+        </script>
+    </div>
 </body>
 
 </html>

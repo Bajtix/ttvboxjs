@@ -8,49 +8,72 @@
     <link href="global.css" rel="stylesheet" />
 </head>
 
-<script>
-    var enabled = false;
 
-    function chat() {
-        if (!enabled) return;
-
-        fetch("/test?type=CHAT");
-
-        setTimeout(() => chat(), Math.random() * 2000);
-    }
-
-    function follow() {
-        if (!enabled) return;
-        fetch("/test?type=FOLLOW");
-        setTimeout(() => follow(), Math.random() * 30000);
-    }
-
-    function startsim() {
-        enabled = true;
-        setTimeout(() => chat(), 100);
-        setTimeout(() => follow(), 1000);
-    }
-
-    function stopsim() {
-        enabled = false;
-    }
-</script>
 
 
 <body>
-    <a href="/">
-        <h1>ttvbox.js</h1>
-    </a>
-    <h2>Test toolbox</h2>
-    <p>The test toolbox allows you to send fake events, which might come in handy while testing themes or your setup in
-        general</p>
-    <h3>Manual tests</h3>
-    <a href="/test?type=CHAT">Send Chat Message</a><br>
-    <a href="/test?type=FOLLOW">Send Follow</a>
-    <h3>StreamSim</h3>
-    <a href="#" onclick="startsim()">Start</a><br>
-    <a href="#" onclick="stopsim()">Stop</a>
+    <div class="homesite-content">
+        <div class="homesite-titlebar">
+            <a class="homesite-title" href="/">
+                <h1>ttvbox.js</h1>
+            </a>
+        </div>
+        <h2>Test Toolbox</h2>
+        <p>
+            You can use the Test Toolbox to test different aspects of your theme, your OBS config or just the entirety
+            of the ttvbox.js app
+        </p>
 
+        <h3 class="homesite-header">General</h3>
+        <a href="/test?type=CONNECT">Connect</a><br>
+
+        <h3 class="homesite-header">Chat</h3>
+        <a href="/test?type=MESSAGE">Connect</a>
+
+        <h3 class="homesite-header">Alertbox</h3>
+        <a href="/test?type=FOLLOW">Follow</a><br>
+        <a href="/test?type=BITCHEER">Bit Cheer</a>
+
+        <h3 class="homesite-header">StreamSim</h3>
+        <a href="#" id="ssimbtn">Enable</a>
+
+
+    </div>
+    <script>
+        var enabled = false;
+
+        function chat() {
+            if (!enabled) return;
+
+            fetch("/test?type=CHAT");
+
+            setTimeout(() => chat(), Math.random() * 2000);
+        }
+
+        function follow() {
+            if (!enabled) return;
+            fetch("/test?type=FOLLOW");
+            setTimeout(() => follow(), Math.random() * 30000);
+        }
+
+        function startsim() {
+            enabled = true;
+            setTimeout(() => chat(), 100);
+            setTimeout(() => follow(), 1000);
+            document.getElementById("ssimbtn").innerHTML = "Disable";
+
+        }
+
+        function stopsim() {
+            enabled = false;
+            document.getElementById("ssimbtn").innerHTML = "Enable";
+
+        }
+
+        document.getElementById("ssimbtn").onclick = ((e) => {
+            if (enabled) stopsim(); else startsim();
+        });
+    </script>
 </body>
 
 </html>

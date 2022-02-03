@@ -1,3 +1,8 @@
+body {
+    overflow-y: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .chat-window {
     overflow-y: hidden;
     overflow-x: hidden;
@@ -10,18 +15,31 @@
     overflow-wrap: break-word;
 }
 
-body {
-    overflow-y: hidden;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
 .emote {
     width: 20px;
     height: 20px;
 }
 
 .hide-overflow {
+    /* Used to prevent overflow in OBS browsers */
     overflow-y: hidden;
     max-height: 90vh;
 }
 
+.homesite-title {
+    text-decoration: none;
+    color: black;
+}
+
+h3.homesite-header {
+    margin-bottom: 0px;
+}
+
+table.homesite-table {
+    width: 50%;
+    text-align: left;
+}
+
+table.homesite-table tr:nth-child(odd) {
+    background-color: #DDD;
+}

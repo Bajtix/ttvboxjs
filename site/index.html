@@ -10,18 +10,64 @@
 
 
 <body>
-    <a href="/">
-        <h1>ttvbox.js</h1>
-    </a>
-    <h2>A local node.js Twitch chat & alertbox</h2>
-    <p>Welcome to the Homepage! It's hosted locally on you computer by the app. You can see the list of options here</p>
-    <h3>Modules</h3>
-    <a target="external" href="chat/">Chat</a><br>
-    <a target="external" href="alertbox/">Alertbox</a>
-    <h3>Themes</h3>
-    <p>TBD</p>
-    <h3>Tools</h3>
-    <a href="testtoolbox.html">Test toolbox</a>
+    <div class="homesite-content">
+        <div class="homesite-titlebar">
+            <a class="homesite-title" href="/">
+                <h1>ttvbox.js</h1>
+            </a>
+        </div>
+        <h2>A local node.js Twitch chat & alertbox</h2>
+        <p>
+            Welcome to the Homepage! It's hosted locally on you computer by the app. You can see the list of options
+            here
+        </p>
+
+        <h3 class="homesite-header">Modules</h3>
+        <a target="external" href="chat/">Chat</a><br>
+        <a target="external" href="alertbox/">Alertbox</a>
+
+        <h3 class="homesite-header">Tools</h3>
+        <a href="testtoolbox.html">Test toolbox</a>
+
+        <h3 class="homesite-header">Themes</h3>
+        <table id="themes" class="homesite-table">
+            <tr>
+                <th>Theme Name</th>
+                <th>Alertbox</th>
+                <th>Chat</th>
+                <th>Selected</th>
+            </tr>
+
+            <script>
+                function loadThemes(txt) {
+                    themels = JSON.parse(txt);
+                    themels.forEach(element => {
+                        abx = "&#10007; NO";
+                        cbx = "&#10007; NO";
+                        sbx = `<a target="external" href="/themeset?theme=${element.name}">&#10007; NO</a>`;
+                        if (element.alertbox) abx = `<a target="external" href="/alertbox?theme=${element.name}">&#10003; YES</a>`;
+                        if (element.chatbox) cbx = `<a target="external" href="/chat?theme=${element.name}">&#10003; YES</a>`;
+                        if (element.default) sbx = `&#10003; YES`;
+
+
+                        template = `
+                        <tr>
+                            <td>${element.name}</td>
+                            <td>${cbx}</td>
+                            <td>${abx}</td>
+                            <td>${sbx}</td>
+                            </tr>`;
+                        document.getElementById("themes").innerHTML += template;
+
+
+                    });
+                }
+
+
+                fetch("/themels").then(w => w.text().then(txt => loadThemes(txt)));
+            </script>
+        </table>
+    </div>
 </body>
 
 </html>
