@@ -11,9 +11,9 @@ const port = 3000;
 
 const httplogger = new butil.Logger("EXPRESS");
 
-const myClientId = "mq7xi6y53ndsk98iwomgjwzcv42hy3";
-const myClientPass = "7gfv2ko10dmmbam4klsq2snwmcj884";
-const userId = 161969141;
+const myClientId = "";
+const myClientPass = "";
+const userId = 0;
 
 var defaultTheme = "default";
 
@@ -64,16 +64,19 @@ app.get('/auth', (req, res) => {
     pg = pg.replace("$CLIENT_ID$", myClientId);
 
     res.send(pg);
-});*/
+});
+function twitchApiStart() {
+
+
+    //legacy code
+    //tokendata = JSON.parse(fs.readFileSync("./tokendata", 'utf-8'));
+
+}*/
+
+
 //#endregion
 
 app.get('/chat', (req, res) => {
-    // if (req.url.indexOf('chat/') == undefined) {
-    //     res.redirect(res.url.replace('/chat', '/chat/'));
-    //     return;
-    // }
-
-
     page = fs.readFileSync('./site/chat/index.html', 'utf8');
 
     urlquery = url.parse(req.url, true).query;
@@ -94,12 +97,6 @@ app.get('/chat', (req, res) => {
 });
 
 app.get('/alertbox', (req, res) => {
-    // if (req.url.indexOf('alertbox/') == undefined) {
-    //     res.redirect(res.url.replace('/alertbox', '/alertbox/'));
-    //     return;
-    // }
-
-
     page = fs.readFileSync('./site/alertbox/index.html', 'utf8');
 
     urlquery = url.parse(req.url, true).query;
@@ -172,25 +169,11 @@ app.get('/themels', (req, res) => {
 
 app.use(express.static("site"));
 
-
-app.listen(port, () => {
-    httplogger.log(`STARTING HTTP SERVICE @${port}`);
-});
-
 app.all('*', (req, res) => {
     var rurl = butil.clean(req.url);
     res.send(siteError(`404 The page ${rurl} does not exist`));
 })
 
-process.on("SIGINT", () => {
-    twitchApiStop();
-    process.exit();
-});
-
-
-function commsStart() {
-    comms.start(port + 1);
-}
 
 function addListenersToEvents() {
     twitch.chatMessage = msg => {
@@ -222,22 +205,20 @@ function addListenersToEvents() {
     }
 }
 
-
-function twitchApiStart() {
-    commsStart();
-    twitch.login(myClientId, myClientPass, userId);
-    addListenersToEvents();
-
-    //legacy code
-    //tokendata = JSON.parse(fs.readFileSync("./tokendata", 'utf-8'));
-
-}
-
 function twitchApiStop() {
     twitch.stop();
     console.log("STOP API SERVICE");
 }
 
+process.on("SIGINT", () => {
+    twitchApiStop();
+    process.exit();
+});
 
-twitchApiStart();
+app.listen(port, () => {
+    httplogger.log(`STARTING HTTP SERVICE @${port}`);
+});
+comms.start(port + 1);
 
+twitch.login(myClientId, myClientPass, userId);
+addListenersToEvents();

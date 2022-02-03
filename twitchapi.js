@@ -25,6 +25,7 @@ exports.onStreamStarted = function (e) { };
 exports.onRaid = function (e) { };
 exports.onRaided = function (e) { };
 exports.onStreamFinished = function (e) { };
+exports.username = "UNDEFINED | NOT LOADED";
 
 
 exports.login = function (_clientId, _clientSecret, _userId) {
@@ -90,6 +91,7 @@ async function initializeEventSub() {
 
 async function initializeChat() {
     let user = await apiClient.users.getUserById(userId);
+    exports.username = user.name;
     chatClient = new ChatClient({ channels: [user.name] });
     await chatClient.connect();
 
