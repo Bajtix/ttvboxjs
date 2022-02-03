@@ -11,33 +11,36 @@
 
 
 
-<body>
-    <div class="homesite-content">
-        <div class="homesite-titlebar">
-            <a class="homesite-title" href="/">
-                <h1>ttvbox.js</h1>
-            </a>
+<body class="homesite">
+    <div class="container">
+        <div class="content">
+            <div class="titlebar">
+                <a class="title" href="/">
+                    <h1>ttvbox.js</h1>
+                </a>
+            </div>
+            <h2>Test Toolbox</h2>
+            <p>
+                You can use the Test Toolbox to test different aspects of your theme, your OBS config or the
+                entirety
+                of the ttvbox.js app
+            </p>
+
+            <h3 class="header">General</h3>
+            <a href="/test?type=CONNECT">Connect</a><br>
+
+            <h3 class="header">Chat</h3>
+            <a href="/test?type=MESSAGE">Connect</a>
+
+            <h3 class="header">Alertbox</h3>
+            <a href="/test?type=FOLLOW">Follow</a><br>
+            <a href="/test?type=BITCHEER">Bit Cheer</a>
+
+            <h3 class="header">StreamSim</h3>
+            <a href="#" id="ssimbtn">Enable</a>
+
+
         </div>
-        <h2>Test Toolbox</h2>
-        <p>
-            You can use the Test Toolbox to test different aspects of your theme, your OBS config or just the entirety
-            of the ttvbox.js app
-        </p>
-
-        <h3 class="homesite-header">General</h3>
-        <a href="/test?type=CONNECT">Connect</a><br>
-
-        <h3 class="homesite-header">Chat</h3>
-        <a href="/test?type=MESSAGE">Connect</a>
-
-        <h3 class="homesite-header">Alertbox</h3>
-        <a href="/test?type=FOLLOW">Follow</a><br>
-        <a href="/test?type=BITCHEER">Bit Cheer</a>
-
-        <h3 class="homesite-header">StreamSim</h3>
-        <a href="#" id="ssimbtn">Enable</a>
-
-
     </div>
     <script>
         var enabled = false;
