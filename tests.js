@@ -59,6 +59,33 @@ exports.sendTestFollow = function () {
 
 }
 
+exports.sendTestBitCheer = function () {
+    var usr = getRandomUser();
+    isAnon = randomInt(10) < 2;
+
+
+
+    if (isAnon) {
+        userName = undefined;
+        displayName = undefined;
+    } else {
+        userName = usr.userName;
+        displayName = usr.displayName;
+    }
+
+    data = {
+        type: "BITCHEER",
+        bits: randomInt(100000),
+        isAnonymous: isAnon,
+        user: {
+            userName: userName,
+            displayName: displayName
+        }
+    }
+    comms.send("[a]" + JSON.stringify(data));
+
+}
+
 exports.sendTestChat = function () {
     mgg = getRandomMessage();
     data = {

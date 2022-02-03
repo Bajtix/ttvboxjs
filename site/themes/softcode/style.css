@@ -160,3 +160,7 @@ h3 {
 
     text-align: left;
 }
+
+.notification h1 {
+    margin-bottom: -10px;
+}

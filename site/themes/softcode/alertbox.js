@@ -12,6 +12,15 @@ onFollow = function (e) {
     common.playAudio('/themes/default/notification1.mp3', 0.5, true);
 }
 
+onBitcheer = function (e) {
+    uname = e.user.displayName;
+    if (e.isAnonymous)
+        uname = "$anon";
+
+    notif(`${uname} cheered`, `${e.bits} bits`, "Thank you!")
+    common.playAudio('/themes/default/notification1.mp3', 0.5, true);
+}
+
 function notif(title, user, message) {
     invalidateAllPrevious();
     alertbox.innerHTML = `<div class='notification' id="${id}">

@@ -25,6 +25,7 @@ exports.onStreamStarted = function (e) { };
 exports.onRaid = function (e) { };
 exports.onRaided = function (e) { };
 exports.onStreamFinished = function (e) { };
+exports.onBitCheer = function (e) { };
 exports.username = "UNDEFINED";
 
 

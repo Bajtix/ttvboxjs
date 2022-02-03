@@ -129,6 +129,9 @@ app.get('/test', (req, res) => {
         case 'CONNECT':
             tests.sendTestConnect();
             break;
+        case 'BITCHEER':
+            tests.sendTestBitCheer();
+            break;
         case 'FOLLOW':
             tests.sendTestFollow();
             break;
@@ -232,6 +235,19 @@ function addListenersToEvents() {
             user: {
                 userName: follow.userName,
                 displayName: follow.userDisplayName,
+            }
+        }
+        comms.send("[a]" + JSON.stringify(data));
+    }
+
+    twitch.onBitCheer = cheer => {
+        data = {
+            type: "BITCHEER",
+            bits: cheer.bits,
+            isAnonymous: cheer.isAnonymous,
+            user: {
+                userName: cheer.userName,
+                displayName: cheer.userDisplayName,
             }
         }
         comms.send("[a]" + JSON.stringify(data));

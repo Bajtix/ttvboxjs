@@ -20,6 +20,11 @@ var onFollow = function (e) {
     setTimeout(() => alertbox.innerHTML = ``, 3000);
 };
 
+var onBitcheer = function (e) {
+    alertbox.innerHTML = `<h1>Bits cheered ${e.bits} bits</h1>`;
+    setTimeout(() => alertbox.innerHTML = ``, 3000);
+};
+
 
 
 window.onload = main;
