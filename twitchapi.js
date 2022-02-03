@@ -15,18 +15,24 @@ var userId = 0;
 var chatClient, listener;
 var apiClient;
 
+const esublogger = new Logger("EVENTSUB");
+const chatlogger = new Logger("CHAT");
+const generallogger = new Logger("TWITCH");
+
 exports.onChatMessage = function (e) { };
 exports.onFollow = function (e) { };
 exports.onStreamStarted = function (e) { };
 
 
 exports.login = function (_clientId, _clientSecret, _userId) {
+    generallogger.log(`INITIALIZING STUFF FOR USER ${_userId}`)
     userId = _userId;
     clientId = _clientId;
     clientSecret = _clientSecret;
     authProvider = new ClientCredentialsAuthProvider(clientId, clientSecret);
     apiClient = new ApiClient({ authProvider });
     apiClient.eventSub.deleteAllSubscriptions();
+    generallogger.log(`SYNC STUFF DONE`)
     initializeChat();
     initializeEventSub();
 }
@@ -42,12 +48,12 @@ async function initializeEventSub() {
     await listener.subscribeToChannelFollowEvents(userId, e => {
         exports.onFollow(e);
     });
-    console.log("EVENTSUB REGISTER FOLLOW");
+    esublogger.log("REGISTER FOLLOW EVENT")
 
     await listener.subscribeToStreamOnlineEvents(userId, e => {
         exports.onStreamStarted(e);
     });
-    console.log("EVENTSUB REGISTER STREAMSTART");
+    esublogger.log("REGISTER STREAMSTART EVENT")
 
 
 
@@ -61,7 +67,7 @@ async function initializeChat() {
     await chatClient.onMessage(async (channel, user, message, msg) => {
         exports.chatMessage(msg)
     });
-    console.log("CHAT REGISTER MESSAGE");
+    chatlogger.log("REGISTER MESSAGE EVENT")
 
 }
 

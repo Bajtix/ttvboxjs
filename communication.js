@@ -1,23 +1,26 @@
 const WebSocket = require('ws');
+const { Logger } = require('./butil');
 
 
 let sockets = [];
 
+const commloger = new Logger("COMM");
+
 exports.start = function (port) {
-    console.log("STARTING COMMS SERVICE");
+    commloger.log(`STARTING COMMS SERVICE @${port}`)
     exports.server = new WebSocket.Server({
         port: port
     });
 
 
     exports.server.on('connection', function (socket) {
-        console.log("comm: new connection");
+        commloger.log(`NEW ${socket.binaryType.toUpperCase()} CONNECTION`)
         sockets.push(socket);
 
         // When you receive a message, send that message to every socket.
         socket.on('message', function (msg) {
             //sockets.forEach(s => s.send(msg));
-            console.log("comm: " + msg);
+            commloger.log(`MSG: ${msg}`)
         });
 
         // When a socket closes, or disconnects, remove it from the array.
@@ -27,7 +30,7 @@ exports.start = function (port) {
     });
 
     exports.server.on('error', (s) => {
-        console.log(s);
+        commloger.log(`ERR ${msg}`)
     });
 }
 

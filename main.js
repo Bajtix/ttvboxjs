@@ -4,9 +4,12 @@ const url = require('url');
 const twitch = require('./twitchapi.js');
 const comms = require('./communication.js');
 const butil = require('./butil.js');
+const { ChildProcess, exec } = require('child_process');
 
 const app = express();
 const port = 3000;
+
+const httplogger = new butil.Logger("EXPRESS");
 
 const myClientId = "mq7xi6y53ndsk98iwomgjwzcv42hy3";
 const myClientPass = "7gfv2ko10dmmbam4klsq2snwmcj884";
@@ -117,7 +120,7 @@ app.use(express.static("site"));
 
 
 app.listen(port, () => {
-    console.log(`STARTING HTTP SERVICE @ ${port}`);
+    httplogger.log(`STARTING HTTP SERVICE @${port}`);
 });
 
 process.on("SIGINT", () => {
@@ -127,7 +130,7 @@ process.on("SIGINT", () => {
 
 
 function commsStart() {
-    comms.start(3001);
+    comms.start(port + 1);
 }
 
 function addListenersToEvents() {
@@ -170,9 +173,6 @@ function twitchApiStop() {
     twitch.stop();
     console.log("STOP API SERVICE");
 }
-
-
-
 
 
 twitchApiStart();
