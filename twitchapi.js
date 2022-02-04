@@ -38,6 +38,12 @@ exports.login = function (_clientId, _clientSecret, _userId) {
     authProvider = new ClientCredentialsAuthProvider(clientId, clientSecret);
     apiClient = new ApiClient({ authProvider });
     apiClient.eventSub.deleteAllSubscriptions();
+
+    authProvider.getAccessToken().then(w => {
+        generallogger.log(JSON.stringify(w));
+    })
+
+
     generallogger.log(`SYNC STUFF DONE`)
 
     exports.findUserByName = function (name) {

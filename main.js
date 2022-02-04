@@ -24,7 +24,7 @@ function siteError(msg, redirect = "/") {
 }
 
 //#region legacy
-/* LEGACY CODE
+ LEGACY CODE
 app.get('/apiauth', (req, res) => {
     urlquery = url.parse(req.url, true).query;
     if (urlquery == null || urlquery.token == null) {
@@ -72,7 +72,7 @@ function twitchApiStart() {
     //legacy code
     //tokendata = JSON.parse(fs.readFileSync("./tokendata", 'utf-8'));
 
-}*/
+}
 
 
 //#endregion
