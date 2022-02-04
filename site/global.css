@@ -32,12 +32,15 @@ body {
 
 
 body.homesite {
-    background-color: #110e1a;
+    --home-light: #161221;
+    --home-dark: #110e1a;
+
+    background-color: var(--home-dark);
     color: #aeacb0;
     display: flex;
     align-items: center;
     margin: 0px;
-    overflow-y: scroll;
+    overflow-y: scroll; 
 }
 
 .homesite .container{
@@ -49,7 +52,7 @@ body.homesite {
 
 .homesite .content {
     width: 75%;
-    background-color: #161221;
+    background-color: var(--home-light);
     display: inline-block;
     padding: 20px;
     min-height: calc(100vh - 40px);
@@ -85,8 +88,17 @@ body.homesite {
 }
 
 
-.homesite h3.header {
+.homesite h3 {
     margin-bottom: 2px;
+}
+
+.homesite .markdown p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.homesite .markdown pre {
+    background-color: var(--home-dark);
 }
 
 .homesite table#themes {
@@ -95,7 +107,7 @@ body.homesite {
 }
 
 .homesite table#themes tr {
-    background-color: #110e1a;
+    background-color: var(--home-dark);
 }
 
 .homesite table#themes * {

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>TwitchApp.js</title>
+    <meta lang="en-US" />
+    <link href="global.css" rel="stylesheet" />
+</head>
+
+
+<body class="homesite">
+    <div class="container">
+        <div class="content">
+            <div class="titlebar">
+                <a class="title" href="/">
+                    <h1>ttvbox.js</h1>
+                </a>
+            </div>
+            <h2>The docs for theme event API</h2>
+            <hr align="left">
+            <p>
+                Developer documentation of the API used by themes.
+            </p>
+
+            <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+            <span class="markdown" id="md">
+
+            </span>
+
+            <script>
+                fetch("/themes/themedoc.md").then(w => w.text().then(e => {
+                    document.getElementById("md").innerHTML = marked.parse(e)
+                        .replace(/<\/h2>/g, "</h2><hr>")
+                }));
+
+            </script>
+
+        </div>
+    </div>
+</body>
+
+</html>

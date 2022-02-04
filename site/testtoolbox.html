@@ -33,7 +33,8 @@
             <h3 class="header">Alertbox</h3>
             <a href="#" onclick="connect()">Connect</a><br>
             <a href="#" onclick="follow()">Follow</a><br>
-            <a href="#" onclick="bitcheer()">Bit Cheer</a>
+            <a href="#" onclick="bitcheer()">Bit Cheer</a><br>
+            <a href="#" onclick="raided()">Raided</a>
 
             <h3 class="header">StreamSim</h3>
             <a href="#" id="ssimbtn">Enable</a>
@@ -75,6 +76,12 @@
 
         function bitcheer() {
             fetch("/test?type=BITCHEER");
+            if (!enabled) return;
+            timeouts.push(setTimeout(() => bitcheer(), Math.random() * 50000));
+        }
+
+        function raided() {
+            fetch("/test?type=RAIDED");
             if (!enabled) return;
             timeouts.push(setTimeout(() => bitcheer(), Math.random() * 50000));
         }

@@ -25,6 +25,11 @@ var onBitcheer = function (e) {
     setTimeout(() => alertbox.innerHTML = ``, 3000);
 };
 
+var onRaided = function (e) {
+    alertbox.innerHTML = `<h1>Getting raided by ${e.raiding.displayName} w/ ${e.viewers} viewers</h1>`;
+    setTimeout(() => alertbox.innerHTML = ``, 3000);
+};
+
 
 
 window.onload = main;

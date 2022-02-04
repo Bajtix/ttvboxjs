@@ -1,6 +1,11 @@
 var audioSource;
 
 class common {
+    /**
+     * Parses an emote string inserting text forms of the emotes
+     * @param {String} message 
+     * @returns The parsed message with <span> emotes
+     */
     static message_parse_textonly(message) {
         const idsl = /(?<={).+?(?=@)/g
         const nmsl = /(?<=@).+?(?=})/g
@@ -21,6 +26,12 @@ class common {
         return result;
     }
 
+
+    /**
+     * Parses an emote string inserting image forms of the emotes
+     * @param {String} message 
+     * @returns The parsed message with <img> emotes
+     */
     static message_parse_withemotes(message) {
         const idsl = /(?<={).+?(?=@)/g
         const nmsl = /(?<=@).+?(?=})/g
@@ -42,11 +53,11 @@ class common {
 
 
 
-    /*
-        Plays audio... duh
-        @param url Url of the audio file
-        @param volume Volume
-        @param force whether to force playback, pausing the previous
+    /**
+     * Plays audio... duh
+     * @param {String} url Url of the audio file
+     * @param {Number} volume Volume
+     * @param {Boolean} force whether to force playback, pausing the previous
     */
     static playAudio(url, volume = 0.5, force = false) {
         if (audioSource != null) {
