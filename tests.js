@@ -2,6 +2,7 @@ const { randomInt } = require('crypto');
 const comms = require('./communication.js');
 const korwin = require('./korwin-gen.js');
 const butil = require('./butil.js');
+const twitch = require('./twitchapi.js')
 
 class usr {
     constructor(userName, displayName, isMod, isSub, isFounder, color) {
@@ -42,6 +43,23 @@ function getRandomMessage() {
 exports.sendTestConnect = function () {
     data = {
         type: "CONNECT"
+    }
+    comms.send("[a]" + JSON.stringify(data));
+}
+
+exports.sendTestRaided = function () {
+    var usr = getRandomUser();
+    data = {
+        type: "RAIDED",
+        viewers: randomInt(1000),
+        raided: {
+            userName: twitch.username,
+            displayName: twitch.displayname
+        },
+        raiding: {
+            userName: usr.userName,
+            displayName: usr.displayName
+        }
     }
     comms.send("[a]" + JSON.stringify(data));
 }

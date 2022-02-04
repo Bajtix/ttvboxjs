@@ -132,6 +132,12 @@ app.get('/test', (req, res) => {
         case 'BITCHEER':
             tests.sendTestBitCheer();
             break;
+        case 'RAID':
+            tests.sendTestRaid();
+            break;
+        case 'RAIDED':
+            tests.sendTestRaided();
+            break;
         case 'FOLLOW':
             tests.sendTestFollow();
             break;
@@ -158,6 +164,9 @@ app.get('/themeset', (req, res) => {
 app.get('/themels', (req, res) => {
     var tresponse = [];
     fs.readdirSync("./site/themes/", 'utf8', true).forEach(element => {
+
+        if (!fs.lstatSync(`./site/themes/${element}`).isDirectory()) return;
+
         ahtml = fs.existsSync(`./site/themes/${element}/alertbox.html`);
         chtml = fs.existsSync(`./site/themes/${element}/chat.html`);
         isdefault = element == defaultTheme;
@@ -212,7 +221,7 @@ app.all('*', (req, res) => {
 
 
 function addListenersToEvents() {
-    twitch.chatMessage = msg => {
+    twitch.onMessage = msg => {
         messageText = butil.emotify(msg);
         data = {
             user: {
@@ -240,7 +249,7 @@ function addListenersToEvents() {
         comms.send("[a]" + JSON.stringify(data));
     }
 
-    twitch.onBitCheer = cheer => {
+    twitch.onBitcheer = cheer => {
         data = {
             type: "BITCHEER",
             bits: cheer.bits,
@@ -248,6 +257,22 @@ function addListenersToEvents() {
             user: {
                 userName: cheer.userName,
                 displayName: cheer.userDisplayName,
+            }
+        }
+        comms.send("[a]" + JSON.stringify(data));
+    }
+
+    twitch.onRaided = raid => {
+        data = {
+            type: "RAIDED",
+            viewers: raid.viewers,
+            raided: {
+                userName: raid.raidedBroadcasterName,
+                displayName: raid.raidedBroadcasterDisplayName
+            },
+            raiding: {
+                userName: raid.raidingBroadcasterName,
+                displayName: raid.raidingBroadcasterDisplayName
             }
         }
         comms.send("[a]" + JSON.stringify(data));

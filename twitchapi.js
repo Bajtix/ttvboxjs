@@ -19,14 +19,15 @@ const esublogger = new Logger("EVENTSUB");
 const chatlogger = new Logger("CHAT");
 const generallogger = new Logger("TWITCH");
 
-exports.onChatMessage = function (e) { };
+exports.onMessage = function (e) { };
 exports.onFollow = function (e) { };
 exports.onStreamStarted = function (e) { };
 exports.onRaid = function (e) { };
 exports.onRaided = function (e) { };
 exports.onStreamFinished = function (e) { };
-exports.onBitCheer = function (e) { };
+exports.onBitcheer = function (e) { };
 exports.username = "UNDEFINED";
+exports.displayname = "UNDEFINED";
 
 
 exports.login = function (_clientId, _clientSecret, _userId) {
@@ -77,12 +78,12 @@ async function initializeEventSub() {
     esublogger.log("REGISTER RAIDED EVENT")
 
     await listener.subscribeToChannelRaidEventsFrom(userId, e => {
-        exports.onRaidStart(e);
+        exports.onRaided(e);
     });
     esublogger.log("REGISTER RAID EVENT")
 
     await listener.subscribeToChannelCheerEvents(userId, e => {
-        exports.onBitCheer(e);
+        exports.onBitcheer(e);
     });
     esublogger.log("REGISTER BITCHEER EVENT")
 
@@ -98,11 +99,14 @@ async function initializeEventSub() {
 async function initializeChat() {
     let user = await apiClient.users.getUserById(userId);
     exports.username = user.name;
+    exports.displayname = user.displayName;
+
+
     chatClient = new ChatClient({ channels: [user.name] });
     await chatClient.connect();
 
     await chatClient.onMessage(async (channel, user, message, msg) => {
-        exports.chatMessage(msg);
+        exports.onMessage(msg);
     });
     chatlogger.log("REGISTER MESSAGE EVENT")
 }
