@@ -24,7 +24,7 @@ function siteError(msg, redirect = "/") {
 }
 
 //#region legacy
- LEGACY CODE
+//LEGACY CODE
 app.get('/apiauth', (req, res) => {
     urlquery = url.parse(req.url, true).query;
     if (urlquery == null || urlquery.token == null) {
