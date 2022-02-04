@@ -37,7 +37,8 @@ exports.login = function (_clientId, _clientSecret, _userId) {
     clientSecret = _clientSecret;
     authProvider = new ClientCredentialsAuthProvider(clientId, clientSecret);
     apiClient = new ApiClient({ authProvider });
-    apiClient.eventSub.deleteAllSubscriptions();
+
+    //apiClient.eventSub.deleteAllSubscriptions(); can't do that!
 
     authProvider.getAccessToken().then(w => {
         generallogger.log(JSON.stringify(w));
@@ -59,6 +60,13 @@ exports.login = function (_clientId, _clientSecret, _userId) {
     generallogger.log("INIT DONE");
 }
 
+var streamOnline,
+    streamOffline,
+    channelRaid,
+    channelRaided,
+    channelCheer,
+    channelFollow;
+
 async function initializeEventSub() {
     listener = new EventSubListener({
         apiClient,
@@ -68,38 +76,50 @@ async function initializeEventSub() {
     listener.listen();
 
 
-    await listener.subscribeToStreamOnlineEvents(userId, e => {
+    streamOnline = await listener.subscribeToStreamOnlineEvents(userId, e => {
         exports.onStreamStarted(e);
+        esublogger.log("STREAMON EVENT");
     });
     esublogger.log("REGISTER STREAMSTART EVENT")
 
-    await listener.subscribeToStreamOfflineEvents(userId, e => {
+    streamOffline = await listener.subscribeToStreamOfflineEvents(userId, e => {
         exports.onStreamFinished(e);
+        esublogger.log("STREAMOFF EVENT");
     });
     esublogger.log("REGISTER STREAMSTOP EVENT")
 
-    await listener.subscribeToChannelRaidEventsTo(userId, e => {
+    channelRaided = await listener.subscribeToChannelRaidEventsTo(userId, e => {
         exports.onRaided(e);
+        esublogger.log("RAIDED EVENT");
     });
     esublogger.log("REGISTER RAIDED EVENT")
 
-    await listener.subscribeToChannelRaidEventsFrom(userId, e => {
+    channelRaid = await listener.subscribeToChannelRaidEventsFrom(userId, e => {
         exports.onRaid(e);
+        esublogger.log("RAID EVENT");
     });
     esublogger.log("REGISTER RAID EVENT")
 
-    await listener.subscribeToChannelCheerEvents(userId, e => {
+    channelCheer = await listener.subscribeToChannelCheerEvents(userId, e => {
         exports.onBitcheer(e);
+        esublogger.log("CHEER EVENT");
     });
     esublogger.log("REGISTER BITCHEER EVENT")
 
-    await listener.subscribetochannel
-
-    await listener.subscribeToChannelFollowEvents(userId, e => {
+    channelFollow = await listener.subscribeToChannelFollowEvents(userId, e => {
         exports.onFollow(e);
-        esublogger.log("FOLLOW EVENT: " + e.userName);
+        esublogger.log("FOLLOW EVENT");
     });
     esublogger.log("REGISTER FOLLOW EVENT")
+}
+
+
+async function stopEventSub() {
+    streamOnline.stop();
+    streamOffline.stop();
+    channelRaid.stop();
+    channelCheer.stop();
+    channelRaided.stop();
 }
 
 async function initializeChat() {
@@ -119,7 +139,11 @@ async function initializeChat() {
 
 exports.stop = function () {
     generallogger.log("STOPPING TWITCH SERVICE")
-    apiClient.eventSub.deleteAllSubscriptions();
+    //apiClient.eventSub.deleteAllSubscriptions();
+
+
+    stopEventSub();
+
     if (listener != null)
         listener.unlisten();
 }

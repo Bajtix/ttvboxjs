@@ -21,6 +21,16 @@ onBitcheer = function (e) {
     common.playAudio('/themes/default/notification1.mp3', 0.5, true);
 }
 
+onRaided = function (e) {
+    notif(`${e.raiding.displayName} is raiding us with`, `${e.viewers} viewers`, "")
+    common.playAudio('/themes/default/notification1.mp3', 0.5, true);
+}
+
+onRaid = function (e) {
+    notif(`Let's raid`, `${e.raided.displayName}`, "")
+    common.playAudio('/themes/default/notification1.mp3', 0.5, true);
+}
+
 function notif(title, user, message) {
     invalidateAllPrevious();
     alertbox.innerHTML = `<div class='notification' id="${id}">
