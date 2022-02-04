@@ -8,30 +8,30 @@ init = function () {
 }
 
 onFollow = function (e) {
-    notif("New follower", e.user.displayName, "")
+    notify("New follower", e.user.userName, "")
     common.playAudio('/themes/default/notification1.mp3', 0.5, true);
 }
 
 onBitcheer = function (e) {
-    uname = e.user.displayName;
+    uname = e.user.userName;
     if (e.isAnonymous)
         uname = "$anon";
 
-    notif(`${uname} cheered`, `${e.bits} bits`, "Thank you!")
+    notify(`${uname} cheered`, `${e.bits} bits`, "Thank you!")
     common.playAudio('/themes/default/notification1.mp3', 0.5, true);
 }
 
 onRaided = function (e) {
-    notif(`${e.raiding.displayName} is raiding us with`, `${e.viewers} viewers`, "")
+    notify(`${e.raiding.userName} is raiding us with`, `${e.viewers} viewers`, "")
     common.playAudio('/themes/default/notification1.mp3', 0.5, true);
 }
 
 onRaid = function (e) {
-    notif(`Let's raid`, `${e.raided.displayName}`, "")
+    notify(`Let's raid`, `${e.raided.userName}`, "")
     common.playAudio('/themes/default/notification1.mp3', 0.5, true);
 }
 
-function notif(title, user, message) {
+function notify(title, user, message) {
     invalidateAllPrevious();
     alertbox.innerHTML = `<div class='notification' id="${id}">
     <h3>${title}</h3>

@@ -10,16 +10,16 @@ function remove(ntf) {
 }
 
 onFollow = function (e) {
-    var ntf = `<div class='notification'><h3>New follower</h3><h1>${e.user.displayName}</h1></div>`;
-    alertbox.innerHTML = ntf;
-
-    setTimeout(remove, 5000, alertbox.innerHTML);
-    common.playAudio('/themes/default/notification2.mp3', 0.2, true);
+    notify("New follower", e.user.displayName)
 }
 
 onBitcheer = function (e) {
     var unm = e.isAnonymous ? "Anonymous" : e.user.displayName;
-    var ntf = `<div class='notification'><h3>${unm} cheered</h3><h1>${e.bits} bits</h1></div>`;
+    notify(`${unm} cheered`, `${e.bits} bits`);
+}
+
+var notify = function (title, important) {
+    var ntf = `<div class='notification'><h3>${title}</h3><h1>${important}</h1></div>`;
     alertbox.innerHTML = ntf;
 
     setTimeout(remove, 5000, alertbox.innerHTML);

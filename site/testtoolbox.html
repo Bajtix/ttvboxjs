@@ -103,20 +103,22 @@
 
         function startsim() {
             enabled = true;
-            setTimeout(() => chat(), 100);
-            setTimeout(() => follow(), 1000);
-            setTimeout(() => bitcheer(), 8000);
-            setTimeout(() => raid(), 16000);
-            setTimeout(() => raided(), 40000);
+            timeouts.push(setTimeout(() => chat(), 100));
+            timeouts.push(setTimeout(() => follow(), 1000));
+            timeouts.push(setTimeout(() => bitcheer(), 8000));
+            timeouts.push(setTimeout(() => raid(), 16000));
+            timeouts.push(setTimeout(() => raided(), 40000));
             document.getElementById("ssimbtn").innerHTML = "Disable";
 
         }
 
         function stopsim() {
+            console.log("stopsim");
             enabled = false;
             document.getElementById("ssimbtn").innerHTML = "Enable";
             timeouts.forEach(element => {
                 clearTimeout(element);
+                console.log("canceltimeout");
             })
         }
 
