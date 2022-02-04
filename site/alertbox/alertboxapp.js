@@ -30,6 +30,11 @@ var onRaided = function (e) {
     setTimeout(() => alertbox.innerHTML = ``, 3000);
 };
 
+var onRaid = function (e) {
+    alertbox.innerHTML = `<h1>Raiding ${e.raided.displayName} w/ ${e.viewers} viewers</h1>`;
+    setTimeout(() => alertbox.innerHTML = ``, 3000);
+};
+
 
 
 window.onload = main;

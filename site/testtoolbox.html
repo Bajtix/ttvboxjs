@@ -34,17 +34,19 @@
             <a href="#" onclick="connect()">Connect</a><br>
             <a href="#" onclick="follow()">Follow</a><br>
             <a href="#" onclick="bitcheer()">Bit Cheer</a><br>
-            <a href="#" onclick="raided()">Raided</a>
+            <a href="#" onclick="raided()">Get Raided</a><br>
+            <a href="#" onclick="raid()">Raid</a>
 
             <h3 class="header">StreamSim</h3>
             <a href="#" id="ssimbtn">Enable</a>
 
             <h3 class="header">Previews</h3>
+            <a href="#" onclick="reload()">Reload | Update</a>
             <div id="previews">
-                <iframe width="40%" height="20%" src="/chat">
+                <iframe id="chats" width="40%" height="20%" src="/chat">
 
                 </iframe>
-                <iframe width="40%" height="20%" src="/alertbox">
+                <iframe id="alerts" width="40%" height="20%" src="/alertbox">
 
                 </iframe>
             </div>
@@ -57,6 +59,13 @@
         var enabled = false;
 
         var timeouts = []
+
+        function reload() {
+            var iframe = document.getElementById('chats');
+            iframe.src = iframe.src;
+            iframe = document.getElementById('alerts');
+            iframe.src = iframe.src;
+        }
 
         function connect() {
             fetch("/test?type=CONNECT");
@@ -83,7 +92,13 @@
         function raided() {
             fetch("/test?type=RAIDED");
             if (!enabled) return;
-            timeouts.push(setTimeout(() => bitcheer(), Math.random() * 50000));
+            timeouts.push(setTimeout(() => bitcheer(), Math.random() * 60000));
+        }
+
+        function raid() {
+            fetch("/test?type=RAID");
+            if (!enabled) return;
+            timeouts.push(setTimeout(() => bitcheer(), Math.random() * 60000));
         }
 
         function startsim() {
@@ -91,6 +106,8 @@
             setTimeout(() => chat(), 100);
             setTimeout(() => follow(), 1000);
             setTimeout(() => bitcheer(), 8000);
+            setTimeout(() => raid(), 16000);
+            setTimeout(() => raided(), 40000);
             document.getElementById("ssimbtn").innerHTML = "Disable";
 
         }

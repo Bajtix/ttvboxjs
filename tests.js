@@ -64,6 +64,23 @@ exports.sendTestRaided = function () {
     comms.send("[a]" + JSON.stringify(data));
 }
 
+exports.sendTestRaid = function () {
+    var usr = getRandomUser();
+    data = {
+        type: "RAID",
+        viewers: randomInt(1000),
+        raided: {
+            userName: usr.userName,
+            displayName: usr.displayName
+        },
+        raiding: {
+            userName: twitch.username,
+            displayName: twitch.displayname
+        }
+    }
+    comms.send("[a]" + JSON.stringify(data));
+}
+
 exports.sendTestFollow = function () {
     var usr = getRandomUser();
     data = {

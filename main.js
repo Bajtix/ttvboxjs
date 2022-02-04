@@ -277,6 +277,22 @@ function addListenersToEvents() {
         }
         comms.send("[a]" + JSON.stringify(data));
     }
+
+    twitch.onRaid = raid => {
+        data = {
+            type: "RAID",
+            viewers: raid.viewers,
+            raided: {
+                userName: raid.raidedBroadcasterName,
+                displayName: raid.raidedBroadcasterDisplayName
+            },
+            raiding: {
+                userName: raid.raidingBroadcasterName,
+                displayName: raid.raidingBroadcasterDisplayName
+            }
+        }
+        comms.send("[a]" + JSON.stringify(data));
+    }
 }
 
 function loadTokenAndSettings() {
