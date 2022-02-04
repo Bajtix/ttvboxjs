@@ -1,8 +1,6 @@
+var audioSource;
+
 class common {
-    static audioLock = 0;
-
-    static audio;
-
     static message_parse_textonly(message) {
         const idsl = /(?<={).+?(?=@)/g
         const nmsl = /(?<=@).+?(?=})/g
@@ -42,6 +40,8 @@ class common {
         return result;
     }
 
+
+
     /*
         Plays audio... duh
         @param url Url of the audio file
@@ -49,18 +49,14 @@ class common {
         @param force whether to force playback, pausing the previous
     */
     static playAudio(url, volume = 0.5, force = false) {
-        if (this.audioLock > 0 && !force) return;
-        if (this.audio != null) {
-            this.audio.pause();
-            this.audioLock--;
+        if (audioSource != null) {
+            if (!audioSource.paused && force)
+                audioSource.pause();
+            else if (!force) return;
         }
 
-        this.audio = new Audio(url);
-        this.audio.volume = volume;
-        this.audio.play();
-        this.audioLock++;
-        this.audio.onended = () => {
-            this.audioLock--;
-        };
+        audioSource = new Audio(url);
+        audioSource.volume = volume;
+        audioSource.play();
     }
 }
