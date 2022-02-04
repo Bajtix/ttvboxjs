@@ -115,6 +115,7 @@ async function initializeEventSub() {
 
 
 async function stopEventSub() {
+
     streamOnline.stop();
     streamOffline.stop();
     channelRaid.stop();
@@ -141,9 +142,8 @@ exports.stop = function () {
     generallogger.log("STOPPING TWITCH SERVICE")
     //apiClient.eventSub.deleteAllSubscriptions();
 
-
-    stopEventSub();
-
-    if (listener != null)
+    if (listener != null) {
+        stopEventSub();
         listener.unlisten();
+    }
 }
