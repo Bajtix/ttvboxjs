@@ -8,26 +8,20 @@
 </head>
 
 
-<body>
-    <a href="/">Back</a><br>
-    <a
-        href="https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=$CLIENT_ID$&redirect_uri=http://localhost:3000/auth&scope=user:read:follows channel:read:subscriptions channel:read:redemptions bits:read">
-        Login to Twitch
-    </a><br>
-    <a href="/savedauth">
-        Recover last login
-    </a>
+<body class="homesite">
+    <a href="/">Back</a><br><br>
+    <p><b>Redirecting...</b></p>
 
     <script>
         const hash = location.hash;
 
         if (hash != "") {
-            document.body.innerHTML += "Redirecting...";
-
             const rgx_token = /(?<=access_token=)(.{30})/g;
 
             tkn = hash.match(rgx_token)[0];
-            location.href = location.href.replace(/auth.*/, `apiauth?token=${tkn}`);
+            location.href = location.href.replace(/auth.*/, `auth?token=${tkn}`);
+        } else {
+            location.href = "https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=$CLIENT_ID$&redirect_uri=http://localhost:3000/auth&scope=user:read:follows channel:read:subscriptions channel:read:redemptions bits:read";
         }
     </script>
 </body>

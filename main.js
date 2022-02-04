@@ -23,59 +23,27 @@ function siteError(msg, redirect = "/") {
     return fs.readFileSync('./site/err.html', 'utf8').replace("$MESSAGE$", msg).replace("$REDIRECT$", redirect);
 }
 
-//#region legacy
-//LEGACY CODE
-app.get('/apiauth', (req, res) => {
-    urlquery = url.parse(req.url, true).query;
-    if (urlquery == null || urlquery.token == null) {
-        res.redirect("/auth");
-        return;
-    }
-    token = {
-        token: urlquery.token,
-        user: userId
-    };
-
-    fs.writeFileSync("./tokendata", JSON.stringify(token));
-
-    commsStart()
-    twitchApiStart();
-
-    res.send("Success! <script>setTimeout(()=>{location.href = 'index.html';},1500)</script>");
-});
-
-app.get('/savedauth', (req, res) => {
-
-    if (!fs.existsSync("tokendata")) {
-        res.send("No saved token <script>setTimeout(()=>{location.href = 'index.html';},1500)</script>");
-        return;
-    }
-
-    token = JSON.parse(fs.readFileSync("tokendata", 'utf-8'))
 
 
-    commsStart()
-    twitchApiStart();
+// app.get('/apiauth', (req, res) => {
 
-    res.send("Success! <script>setTimeout(()=>{location.href = 'index.html';},1500)</script>");
-});
+// });
 
 app.get('/auth', (req, res) => {
-    pg = fs.readFileSync('./site/apiauth.html', 'utf8');
-    pg = pg.replace("$CLIENT_ID$", myClientId);
 
-    res.send(pg);
+    urlquery = url.parse(req.url, true).query;
+    if (urlquery == null || urlquery.token == null) {
+        pg = fs.readFileSync('./site/apiauth.html', 'utf8');
+        pg = pg.replace("$CLIENT_ID$", myClientId);
+
+        res.send(pg);
+        return;
+    }
+
+    res.send(siteError("Authentication complete"));
+
+
 });
-function twitchApiStart() {
-
-
-    //legacy code
-    //tokendata = JSON.parse(fs.readFileSync("./tokendata", 'utf-8'));
-
-}
-
-
-//#endregion
 
 app.get('/chat', (req, res) => {
     page = fs.readFileSync('./site/chat/index.html', 'utf8');

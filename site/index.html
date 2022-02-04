@@ -25,65 +25,65 @@
             </p>
 
             <h3 class="header">User</h3>
-            <a id="userid" href="#" onclick="changeusername()">UNDEFINED</a>
+            <a id="userid" href="#" onclick="changeusername()">UNDEFINED</a><br>
+            <a id="userid" href="/auth"">Authorize application</a>
 
             <script>
                 function changeusername() {
-                    unm = prompt("Type in your username (NOT DISPLAYNAME)");
-                    window.location.href = "/userset?name=" + unm;
-                }
-                fetch("/userls").then(w => w.text().then(e => {
+                    unm = prompt(" Type in your username (NOT DISPLAYNAME)"); window.location.href = "/userset?name=" +
+                        unm;
+                } fetch("/userls").then(w => w.text().then(e => {
                     name = JSON.parse(e).name;
                     document.getElementById("userid").innerHTML = name + " (change)";
                 }));
             </script>
 
-            <h3 class="header">Modules</h3>
-            <a target="external" href="chat/">Chat</a><br>
-            <a target="external" href="alertbox/">Alertbox</a>
+                <h3 class="header">Modules</h3>
+                <a target="external" href="chat/">Chat</a><br>
+                <a target="external" href="alertbox/">Alertbox</a>
 
-            <h3 class="header">Tools</h3>
-            <a href="testtoolbox.html">Test Toolbox</a><br>
-            <a href="themedoc.html">Theme Docs</a>
+                <h3 class="header">Tools</h3>
+                <a href="testtoolbox.html">Test Toolbox</a><br>
+                <a href="themedoc.html">Theme Docs</a>
 
-            <h3 class="header">Themes</h3>
-            <table id="themes">
-                <tr>
-                    <th>Theme Name</th>
-                    <th>Chat</th>
-                    <th>Alertbox</th>
-                    <th>Selected Default</th>
-                </tr>
+                <h3 class="header">Themes</h3>
+                <table id="themes">
+                    <tr>
+                        <th>Theme Name</th>
+                        <th>Chat</th>
+                        <th>Alertbox</th>
+                        <th>Selected Default</th>
+                    </tr>
 
-                <script>
-                    function loadThemes(txt) {
-                        themels = JSON.parse(txt);
-                        themels.forEach(element => {
-                            abx = "&#10007; NO";
-                            cbx = "&#10007; NO";
-                            sbx = `<a href="/themeset?theme=${element.name}">&#10007; SELECT</a>`;
-                            if (element.alertbox) abx = `<a target="external" href="/alertbox?theme=${element.name}">&#10003; YES</a>`;
-                            if (element.chatbox) cbx = `<a target="external" href="/chat?theme=${element.name}">&#10003; YES</a>`;
-                            if (element.default) sbx = `&#10003; SELECTED`;
+                    <script>
+                        function loadThemes(txt) {
+                            themels = JSON.parse(txt);
+                            themels.forEach(element => {
+                                abx = "&#10007; NO";
+                                cbx = "&#10007; NO";
+                                sbx = `<a href="/themeset?theme=${element.name}">&#10007; SELECT</a>`;
+                                if (element.alertbox) abx = `<a target="external" href="/alertbox?theme=${element.name}">&#10003; YES</a>`;
+                                if (element.chatbox) cbx = `<a target="external" href="/chat?theme=${element.name}">&#10003; YES</a>`;
+                                if (element.default) sbx = `&#10003; SELECTED`;
 
 
-                            template = `
+                                template = `
                         <tr>
                             <td>${element.name}</td>
                             <td>${cbx}</td>
                             <td>${abx}</td>
                             <td>${sbx}</td>
                             </tr>`;
-                            document.getElementById("themes").innerHTML += template;
+                                document.getElementById("themes").innerHTML += template;
 
 
-                        });
-                    }
+                            });
+                        }
 
 
-                    fetch("/themels").then(w => w.text().then(txt => loadThemes(txt)));
-                </script>
-            </table>
+                        fetch("/themels").then(w => w.text().then(txt => loadThemes(txt)));
+                    </script>
+                </table>
         </div>
     </div>
 </body>
