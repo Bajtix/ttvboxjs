@@ -79,12 +79,12 @@ async function initializeEventSub() {
     esublogger.log("REGISTER STREAMSTOP EVENT")
 
     await listener.subscribeToChannelRaidEventsTo(userId, e => {
-        exports.onRaid(e);
+        exports.onRaided(e);
     });
     esublogger.log("REGISTER RAIDED EVENT")
 
     await listener.subscribeToChannelRaidEventsFrom(userId, e => {
-        exports.onRaided(e);
+        exports.onRaid(e);
     });
     esublogger.log("REGISTER RAID EVENT")
 
