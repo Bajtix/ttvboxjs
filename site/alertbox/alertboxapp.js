@@ -11,29 +11,35 @@ var onConnect = function () {
 };
 
 var onDisconnect = function () {
-    alertbox.innerHTML = `<h1>Disconnected</h1>`;
-    setTimeout(() => alertbox.innerHTML = ``, 3000);
+    // alertbox.innerHTML = `<h1>Disconnected</h1>`;
+    // setTimeout(() => alertbox.innerHTML = ``, 3000);
 };
 
 var onFollow = function (e) {
-    alertbox.innerHTML = `<h1>New follower: ${e.user.displayName}</h1>`;
-    setTimeout(() => alertbox.innerHTML = ``, 3000);
+    // alertbox.innerHTML = `<h1>New follower: ${e.user.displayName}</h1>`;
+    // setTimeout(() => alertbox.innerHTML = ``, 3000);
 };
 
 var onBitcheer = function (e) {
-    alertbox.innerHTML = `<h1>Bits cheered ${e.bits} bits</h1>`;
-    setTimeout(() => alertbox.innerHTML = ``, 3000);
+    // alertbox.innerHTML = `<h1>Bits cheered ${e.bits} bits</h1>`;
+    // setTimeout(() => alertbox.innerHTML = ``, 3000);
 };
 
 var onRaided = function (e) {
-    alertbox.innerHTML = `<h1>Getting raided by ${e.raiding.displayName} w/ ${e.viewers} viewers</h1>`;
-    setTimeout(() => alertbox.innerHTML = ``, 3000);
+    // alertbox.innerHTML = `<h1>Getting raided by ${e.raiding.displayName} w/ ${e.viewers} viewers</h1>`;
+    // setTimeout(() => alertbox.innerHTML = ``, 3000);
 };
 
 var onRaid = function (e) {
-    alertbox.innerHTML = `<h1>Raiding ${e.raided.displayName} w/ ${e.viewers} viewers</h1>`;
-    setTimeout(() => alertbox.innerHTML = ``, 3000);
+    // alertbox.innerHTML = `<h1>Raiding ${e.raided.displayName} w/ ${e.viewers} viewers</h1>`;
+    // setTimeout(() => alertbox.innerHTML = ``, 3000);
 };
+
+var onGenericEvent = function (e) {
+    // alertbox.innerHTML = `<h1>${e.eventName}</h1><span>${e.eventData}</span>`;}`;
+    // setTimeout(() => alertbox.innerHTML = ``, 3000);
+};
+
 
 
 

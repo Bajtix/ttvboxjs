@@ -84,3 +84,12 @@ raid = {
     }
 }
 ```
+
+### Generic
+Intended for use in extensions (TBD, subject to change)
+
+```js
+onRaided = function(raid) {}
+eventName = "",
+eventData = ""
+```

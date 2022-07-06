@@ -5,16 +5,16 @@ var init = function () {
 }
 
 var onMessage = function (message) {
-    message.message = common.message_parse_withemotes(message.message);
-    chat.innerHTML = `<p><b>${message.user.userName}</b> ${message.message}</p>` + chat.innerHTML;
+    //message.message = common.message_parse_withemotes(message.message);
+    //chat.innerHTML = `<p><b>${message.user.userName}</b> ${message.message}</p>` + chat.innerHTML;
 };
 
 var onConnect = function () {
-    chat.innerHTML = `<i>Connected</i><br>`;
+    //chat.innerHTML = `<i>Connected</i><br>`;
 };
 
 var onDisconnect = function () {
-    chat.innerHTML = `<i>Disconnected. Reconnecting in 5s</i><br>` + chat.innerHTML;
+    //chat.innerHTML = `<i>Disconnected. Reconnecting in 5s</i><br>` + chat.innerHTML;
 };
 
 
